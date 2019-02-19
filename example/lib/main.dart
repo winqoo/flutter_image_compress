@@ -35,7 +35,8 @@ class _MyAppState extends State<MyApp> {
     var beforeCompress = data.lengthInBytes;
     print("beforeCompress = $beforeCompress");
 
-    var result = await FlutterImageCompress.compressWithList(data.buffer.asUint8List());
+    var result =
+        await FlutterImageCompress.compressWithList(data.buffer.asUint8List());
 
     print("after = ${result?.length ?? 0}");
   }

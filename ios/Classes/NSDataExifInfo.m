@@ -6,17 +6,23 @@
 //
 
 #import "NSDataExifInfo.h"
-#import "UIImage+scale.h"
-#import <SYPictureMetadata/SYMetadata.h>
 
 @implementation NSDataExifInfo {
-    SYMetadata *metadata;
+
 }
 - (instancetype)initWithImageData:(NSData *)imageData {
     self = [super init];
     if (self) {
-        self.imageData = imageData;
-        [self saveExifInfo];
+        self.metadata = [SYMetadata metadataWithImageData:imageData];
+    }
+
+    return self;
+}
+
+- (instancetype)initWithMetaData:(SYMetadata *)metaData {
+    self = [super init];
+    if (self) {
+        self.metadata = metaData;
     }
 
     return self;
@@ -26,12 +32,12 @@
     return [[self alloc] initWithImageData:imageData];
 }
 
-- (void)saveExifInfo {
-    metadata = [SYMetadata metadataWithImageData:self.imageData];
++ (instancetype)infoWithMetaData:(SYMetadata *)metaData {
+    return [[self alloc] initWithMetaData:metaData];
 }
 
 - (NSData *)saveMetaToData:(NSData *)data {
-    NSData *dataWithMetadata = [SYMetadata dataWithImageData:data andMetadata:metadata];
+    NSData *dataWithMetadata = [SYMetadata dataWithImageData:data andMetadata:self.metadata];
     return dataWithMetadata;
 }
 

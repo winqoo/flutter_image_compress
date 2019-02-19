@@ -4,6 +4,7 @@
 
 #import "CompressFileHandler.h"
 #import "CompressHandler.h"
+#import "NSDataExifInfo.h"
 
 
 @implementation CompressFileHandler {
@@ -17,9 +18,18 @@
     int minHeight = [args[2] intValue];
     int quality = [args[3] intValue];
     int rotate = [args[4] intValue];
+    BOOL keepExif = [args[5] boolValue];
 
     UIImage *img = [UIImage imageWithContentsOfFile:path];
+    NSDataExifInfo *info;
+    if (keepExif) {
+        info = [NSDataExifInfo infoWithMetaData:[SYMetadata metadataWithFileURL:[[NSURL alloc] initFileURLWithPath:path]]];
+    }
     NSData *data = [CompressHandler compressWithUIImage:img minWidth:minWidth minHeight:minHeight quality:quality rotate:rotate];
+    if (keepExif && info) {
+        data = [info saveMetaToData:data];
+    }
+
     result([FlutterStandardTypedData typedDataWithBytes:data]);
 }
 
@@ -32,9 +42,20 @@
     int quality = [args[3] intValue];
     NSString *targetPath = args[4];
     int rotate = [args[5] intValue];
-    
+    BOOL keepExif = [args[6] boolValue];
+
+    NSDataExifInfo *info;
+    if (keepExif) {
+        info = [NSDataExifInfo infoWithMetaData:[SYMetadata metadataWithFileURL:[[NSURL alloc] initFileURLWithPath:path]]];
+    }
+
     UIImage *img = [UIImage imageWithContentsOfFile:path];
     NSData *data = [CompressHandler compressDataWithUIImage:img minWidth:minWidth minHeight:minHeight quality:quality rotate:rotate];
+
+    if (keepExif && info) {
+        data = [info saveMetaToData:data];
+    }
+
     [data writeToURL:[[NSURL alloc] initFileURLWithPath:targetPath] atomically:YES];
 
     result(targetPath);
