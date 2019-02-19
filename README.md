@@ -97,7 +97,7 @@ you maybe need convert `List<int>` to 'Uint8List' to display image
 
 use Uint8List need import package to your code like this
 
-![](https://ws1.sinaimg.cn/large/844036b9ly1fxhyu2opqqj20j802c3yr.jpg)
+![img](https://ws1.sinaimg.cn/large/844036b9ly1fxhyu2opqqj20j802c3yr.jpg)
 
 ```dart
 var u8 = Uint8List.fromList(list)
@@ -132,7 +132,7 @@ For example, use the [path_provider](https://pub.dartlang.org/packages/path_prov
 
 ## android build error
 
-```
+```log
 Caused by: org.gradle.internal.event.ListenerNotificationException: Failed to notify project evaluation listener.
         at org.gradle.internal.event.AbstractBroadcastDispatch.dispatch(AbstractBroadcastDispatch.java:86)
         ...
