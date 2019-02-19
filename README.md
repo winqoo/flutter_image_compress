@@ -150,3 +150,9 @@ If flutter supports more platforms (windows, mac, linux, other) in the future an
 ## ABOUT EXIF
 
 Using this library, EXIF information will be removed.
+
+## LICENSE
+
+MIT LICENSE
+
+ios: use [SYPictureMetadata](https://github.com/dvkch/SYPictureMetadata.git) library to handle exif.
