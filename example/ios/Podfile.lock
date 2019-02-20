@@ -13,8 +13,8 @@ PODS:
 
 DEPENDENCIES:
   - Flutter (from `.symlinks/flutter/ios`)
-  - flutter_image_compress (from `/Users/caijinglong/Documents/GitHub/flutter_image_compress/ios/flutter_image_compress.podspec`)
-  - path_provider (from `/Users/caijinglong/.pub-cache/hosted/pub.flutter-io.cn/path_provider-0.4.1/ios/path_provider.podspec`)
+  - flutter_image_compress (from `/Users/cai/Documents/GitHub/flutter_image_compress/ios/flutter_image_compress.podspec`)
+  - path_provider (from `/Users/cai/.pub-cache/hosted/pub.flutter-io.cn/path_provider-0.4.1/ios/path_provider.podspec`)
 
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
@@ -25,9 +25,9 @@ EXTERNAL SOURCES:
   Flutter:
     :path: ".symlinks/flutter/ios"
   flutter_image_compress:
-    :path: "/Users/caijinglong/Documents/GitHub/flutter_image_compress/ios/flutter_image_compress.podspec"
+    :path: "/Users/cai/Documents/GitHub/flutter_image_compress/ios/flutter_image_compress.podspec"
   path_provider:
-    :path: "/Users/caijinglong/.pub-cache/hosted/pub.flutter-io.cn/path_provider-0.4.1/ios/path_provider.podspec"
+    :path: "/Users/cai/.pub-cache/hosted/pub.flutter-io.cn/path_provider-0.4.1/ios/path_provider.podspec"
 
 SPEC CHECKSUMS:
   Flutter: 9d0fac939486c9aba2809b7982dfdbb47a7b0296

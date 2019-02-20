@@ -35,8 +35,7 @@ class _MyAppState extends State<MyApp> {
     var beforeCompress = data.lengthInBytes;
     print("beforeCompress = $beforeCompress");
 
-    var result =
-        await FlutterImageCompress.compressWithList(data.buffer.asUint8List());
+    var result = await FlutterImageCompress.compressWithList(data.buffer.asUint8List());
 
     print("after = ${result?.length ?? 0}");
   }
@@ -76,6 +75,10 @@ class _MyAppState extends State<MyApp> {
               FlatButton(
                 child: Text('CompressList and rotate 270'),
                 onPressed: compressListExample,
+              ),
+              FlatButton(
+                child: Text('test exif keep'),
+                onPressed: testCompressAndKeepExif,
               ),
             ],
           ),
@@ -131,7 +134,7 @@ class _MyAppState extends State<MyApp> {
     setState(() {});
   }
 
-  Future<List<int>> testCompressFile(File file) async {
+  Future<List<int>> testCompressFile(File file, {bool keepExif = false}) async {
     print("testCompressFile");
     var result = await FlutterImageCompress.compressWithFile(
       file.absolute.path,
@@ -147,6 +150,7 @@ class _MyAppState extends State<MyApp> {
 
   Future<File> testCompressAndGetFile(File file, String targetPath) async {
     print("testCompressAndGetFile");
+    print("srcPath = ${file.absolute.path}");
     var result = await FlutterImageCompress.compressAndGetFile(
       file.absolute.path,
       targetPath,
@@ -156,6 +160,7 @@ class _MyAppState extends State<MyApp> {
       rotate: 90,
     );
 
+    print("resultPath = ${result.absolute.path}");
     print(file.lengthSync());
     print(result.lengthSync());
 
@@ -211,5 +216,34 @@ class _MyAppState extends State<MyApp> {
   void writeToFile(List<int> list, String filePath) {
     var file = File(filePath);
     file.writeAsBytes(list, flush: true, mode: FileMode.write);
+  }
+
+  void testCompressAndKeepExif() async {
+    var img = AssetImage("img/have-exif.jpg");
+    print("pre compress");
+    var config = new ImageConfiguration();
+
+    AssetBundleImageKey key = await img.obtainKey(config);
+    final ByteData data = await key.bundle.load(key.name);
+    var dir = await path_provider.getTemporaryDirectory();
+    print('dir = $dir');
+
+    File file = File("${dir.absolute.path}/test.jpg");
+    file.writeAsBytesSync(data.buffer.asUint8List());
+
+    String targetPath = "${dir.absolute.path}/target.jpg";
+    var tf = await FlutterImageCompress.compressAndGetFile(
+      file.path,
+      targetPath,
+      minWidth: 900,
+      minHeight: 1000,
+      keepExif: true,
+    );
+
+    print("targetPath = $targetPath");
+
+    ImageProvider provider = FileImage(tf);
+    this.provider = provider;
+    setState(() {});
   }
 }
